@@ -2,7 +2,7 @@ import os
 import requests
 import json
 from bs4 import BeautifulSoup
-import yt_dlp
+import re
 import sys
 
 url = "https://lecture2go.uni-hamburg.de/l2go/-/get/v/"
@@ -11,42 +11,25 @@ video_directory = "./videos"
 videos = []
 
 def get_m3u8_link(video_url):
-    ydl_opts = {
-        'quiet': True,
-        'format': 'best',
-        'extract_flat': False,
-        'noplaylist': True
-    }
-
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        try:
-            info_dict = ydl.extract_info(video_url, download=False)
-            if "entries" in info_dict:
-                return info_dict["entries"][0]["url"]
-            else:
-                return info_dict["url"]
-        except Exception as e:
-            print(f"Fehler beim Abrufen des m3u8-Links: {e}")
-
+    resp = requests.get(video_url)
+    if resp.status_code != 200:
+        print(f"Failed to fetch {video_url}")
+        return None
+    match = re.search(r'initVideoPlayer\(.*?\[\{"src":"(https?://[^"]+\.m3u8)"', resp.text, re.DOTALL)
+    if match:
+        return match.group(1)
+    print(f"Fehler beim Abrufen des m3u8-Links: No m3u8 found in {video_url}")
     return None
 
 def get_thumbnail_link(video_url):
-    ydl_opts = {
-        'quiet': True,
-        'format': 'best',
-        'extract_flat': False,
-        'noplaylist': True
-    }
-
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        try:
-            info_dict = ydl.extract_info(video_url, download=False)
-            if "?lastmodified" in info_dict["thumbnail"]:
-                thumbnail = info_dict["thumbnail"].split("?lastmodified")[0]
-            return thumbnail
-        except Exception as e:
-            print(f"Fehler beim Abrufen des Thumbnail-Links: {e}")
-
+    resp = requests.get(video_url)
+    if resp.status_code != 200:
+        print(f"Failed to fetch {video_url}")
+        return None
+    match = re.search(r'initVideoPlayer\(.*?,\s*"(https?://[^"]+\.jpg)\?lastmodified', resp.text, re.DOTALL)
+    if match:
+        return match.group(1)
+    print(f"Fehler beim Abrufen des Thumbnail-Links: No thumbnail found in {video_url}")
     return None
 
 if __name__ == "__main__":
