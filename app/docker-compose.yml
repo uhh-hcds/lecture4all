@@ -54,7 +54,7 @@ services:
       - /srv/docker/whisper4all/whisper4all_projectai/transcription:/transcription
     networks:
       - w4a-network
-    entrypoint: /app/entrypoint.sh
+    entrypoint: ./entrypoint.sh
 
     
 networks:
