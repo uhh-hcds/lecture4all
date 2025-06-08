@@ -22,6 +22,8 @@ def download_video(video_url):
         'format': 'best',
         'outtmpl': f'./videos/{id}.%(ext)s',
         'noplaylist': True,
+        'nocheckcertificate': True,
+        'verbose': True,
     }
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:

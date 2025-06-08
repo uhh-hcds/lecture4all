@@ -5,17 +5,17 @@
 {% block content %}
 <div class="short-container">
     <div class="short-wrapper">
-        <iframe class="short" id="currentIframe" src='' frameborder="0" allowfullscreen allow="autoplay"></iframe> 
-        <div class="meta-daten">
+        <video class="short" id="currentShort" src='' frameborder="0"></video> 
+        <!-- <div class="meta-daten">
             <h5 style="color:white">{{ video_results[0].title }}</h5>
             {{ video_results[0].speaker }} <br>
             {{ video_results[0].date }}
-        </div>
+        </div> -->
         <div class="skip-left" id="left">
-            <img src="{{ url_for('static', filename='images/arrow-left.svg') }}" alt="arrow-left" style="height: 32px;">
+            <img src="{{ url_for('static', filename='images/arrow-left.svg') }}" alt="arrow-left" style="height: 42px; filter: invert(16%) sepia(19%) saturate(1812%) hue-rotate(282deg) brightness(80%) contrast(90%);">
         </div>
         <div class="skip-right" id="right">
-            <img src="{{ url_for('static', filename='images/arrow-right.svg') }}" alt="arrow-right" style="height: 32px;">
+            <img src="{{ url_for('static', filename='images/arrow-right.svg') }}" alt="arrow-right" style="height: 42px; filter: invert(16%) sepia(19%) saturate(1812%) hue-rotate(282deg) brightness(80%) contrast(90%);">
         </div>
         <a class="videobutton me-3" id="videoButton" href="{{ url_for('video', video_id=video_results[0].video_id) }}">
             <img src="{{ url_for('static', filename='images/video.svg') }}" alt="video" style="height: 20px;">
@@ -38,5 +38,6 @@
         return "{{ url_for('video') }}";
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script src="{{ url_for('static', filename='shorts.js') }}"></script>
 {% endblock %}

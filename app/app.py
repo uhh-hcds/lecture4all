@@ -8,12 +8,32 @@ from flask import Flask, render_template, request, jsonify, session
 import requests
 import os
 import json
+#import time
 from datetime import timedelta
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = 'secret_key'
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
+
+# # ─── Record start time for every incoming request ───────────────────────────────
+# @app.before_request
+# def start_timer():
+#     g.request_start = time.perf_counter()
+#     # optional: generate a request ID if you want to correlate logs downstream
+#     g.request_id = f"{int(g.request_start * 1e6)}"
+
+# # ─── After each request, log the total elapsed time ─────────────────────────────
+# @app.after_request
+# def log_request(response):
+#     elapsed_ms = (time.perf_counter() - g.request_start) * 1000
+#     app.logger.info(
+#         f"[req={g.request_id}] {request.method} {request.path} "
+#         f"status={response.status_code} elapsed_ms={elapsed_ms:.2f}"
+#     )
+#     # expose timing to clients if useful
+#     response.headers["X-Response-Time-ms"] = f"{elapsed_ms:.2f}"
+#     return response
 
 @app.route('/')
 def hello_world():
@@ -50,7 +70,7 @@ def shorts():
     json_data, status_code = handle_query(query)
     if status_code != 200:
         return render_template('error.html', error_info=json_data), status_cod
-    return render_template('shorts2.html', query=query, video_results=json_data['videos'], result_count=len(json_data['videos']))
+    return render_template('shorts.html', query=query, video_results=json_data['videos'], result_count=len(json_data['videos']))
 
 @app.route('/searchresults', methods=['GET'])
 def searchresults():

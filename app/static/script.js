@@ -58,56 +58,57 @@ document.addEventListener("DOMContentLoaded", function () {
     let stream;
     let recorder;
 
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        warningDiv.style.display = 'block';
-    } else {
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'de-DE';
-        recognition.interimResults = false;
-        recognition.maxAlternatives = 1;
+    // Use a variable for the constructor
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        if (warningDiv) warningDiv.style.display = 'block';
+        return; // Stop further execution if not supported
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'de-DE';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
 
-        microButton.addEventListener("click", async () => {
-            stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            recorder = new MediaRecorder(stream);
-            audioPopup.style.display = 'flex';
-            recognition.start();
-        });
+    microButton.addEventListener("click", async () => {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        recorder = new MediaRecorder(stream);
+        audioPopup.style.display = 'flex';
+        recognition.start();
+    });
 
-        recognition.onresult = (event) => {
-            const transcript = event.results[0][0].transcript;
-            console.log('Erkanntes Wort:', transcript);
-            document.querySelector('input[name="query"]').value = transcript;
-            document.getElementById('searchForm').submit();
-        };
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        console.log('Erkanntes Wort:', transcript);
+        document.querySelector('input[name="query"]').value = transcript;
+        document.getElementById('searchForm').submit();
+    };
 
-        recognition.onerror = (event) => {
-            console.error('Fehler bei der Spracherkennung:', event.error);
-        };
+    recognition.onerror = (event) => {
+        console.error('Fehler bei der Spracherkennung:', event.error);
+    };
 
-        recognition.onend = () => {
-            console.log('Spracherkennung beendet.');
-        };
+    recognition.onend = () => {
+        console.log('Spracherkennung beendet.');
+    };
 
-        fertig.addEventListener('click', () => {
-            stream.getTracks().forEach(track => track.stop());
-            recognition.stop();
-        });
+    fertig.addEventListener('click', () => {
+        stream.getTracks().forEach(track => track.stop());
+        recognition.stop();
+    });
 
-        schließen.addEventListener("click", () => {
+    schließen.addEventListener("click", () => {
+        stream.getTracks().forEach(track => track.stop());
+        recognition.stop();
+        audioPopup.style.display = 'none';
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
             stream.getTracks().forEach(track => track.stop());
             recognition.stop();
             audioPopup.style.display = 'none';
-        });
-
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                stream.getTracks().forEach(track => track.stop());
-                recognition.stop();
-                audioPopup.style.display = 'none';
-            }
-        });
-    }
-
+        }
+    });
 
     searchForm.addEventListener('submit', function(event) {
         event.preventDefault(); 
