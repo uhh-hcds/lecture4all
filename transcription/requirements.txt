@@ -3,6 +3,7 @@ torch
 whisper_timestamped
 bs4
 yt_dlp
+requests
 SentencePiece
 transformers
 sacremoses
