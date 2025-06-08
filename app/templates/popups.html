@@ -1,0 +1,11 @@
+<div id="loadingPopup" class="loading-popup">
+    <img src="{{ url_for('static', filename='images/whisper_icon.png') }}" alt="Loading" class="rotating-icon">
+</div>
+
+<div id="audioPopup" class="loading-popup">
+    <div class="audio-container">
+        <h3>jetzt sprechen...</h3>
+        <button class="roundButton"><img src="{{ url_for('static', filename='images/microphone.svg') }}" id="microphoneLogo" alt="Microphone"></button>
+        <button class="btn hint-text" id="schließen">abbrechen</button>
+    </div>
+</div>

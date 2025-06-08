@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Lecture4All - Shorts{% endblock %}
+
+{% block content %}
+<div class="short-container">
+    <div class="short-wrapper">
+        <iframe class="short" id="currentIframe" src='' frameborder="0" allowfullscreen allow="autoplay"></iframe> 
+        <div class="meta-daten">
+            <h5 style="color:white">{{ video_results[0].title }}</h5>
+            {{ video_results[0].speaker }} <br>
+            {{ video_results[0].date }}
+        </div>
+        <div class="skip-left" id="left">
+            <img src="{{ url_for('static', filename='images/arrow-left.svg') }}" alt="arrow-left" style="height: 32px;">
+        </div>
+        <div class="skip-right" id="right">
+            <img src="{{ url_for('static', filename='images/arrow-right.svg') }}" alt="arrow-right" style="height: 32px;">
+        </div>
+        <a class="videobutton me-3" id="videoButton" href="{{ url_for('video', video_id=video_results[0].video_id) }}">
+            <img src="{{ url_for('static', filename='images/video.svg') }}" alt="video" style="height: 20px;">
+            go to video
+        </a>
+    </div>
+    <div class="sideboard" id="sideee">
+    </div>
+    <div class="mobileHint">Swipe nach links oder rechts, um mehr Shorts zu entdecken!</div>
+</div>
+<script>
+    sessionStorage.setItem("json", JSON.stringify({{ video_results | tojson | safe }}));
+    function getResultsJS()
+    {
+        const resultString = JSON.stringify({{ video_results | tojson | safe }});
+        return JSON.parse(resultString);
+    }
+
+    function getVideoUrl() {
+        return "{{ url_for('video') }}";
+    }
+</script>
+<script src="{{ url_for('static', filename='shorts.js') }}"></script>
+{% endblock %}

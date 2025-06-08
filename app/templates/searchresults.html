@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Lecture4All - {{ query }}{% endblock %}
+
+{% block content %}
+<div class="search-result-header">
+    <p>Deine Suchergebnisse für "{{ query }}" ({{ result_count }} Treffer):</p>
+</div>
+{% include "searchresults-only.html" %}
+
+{% endblock %}

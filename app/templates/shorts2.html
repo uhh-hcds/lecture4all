@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Lecture4All - Shorts{% endblock %}
+
+{% block content %}
+<div class="short-container">
+    <div class="short-wrapper">
+        <video class="short" id="currentShort" src='' frameborder="0" autoplay></video> 
+        <div class="meta-daten">
+            <h5 style="color:white">{{ video_results[0].title }}</h5>
+            {{ video_results[0].speaker }} <br>
+            {{ video_results[0].date }}
+        </div>
+        <div class="skip-left" id="left">
+            <img src="{{ url_for('static', filename='images/arrow-left.svg') }}" alt="arrow-left" style="height: 32px;">
+        </div>
+        <div class="skip-right" id="right">
+            <img src="{{ url_for('static', filename='images/arrow-right.svg') }}" alt="arrow-right" style="height: 32px;">
+        </div>
+        <a class="videobutton me-3" id="videoButton" href="{{ url_for('video', video_id=video_results[0].video_id) }}">
+            <img src="{{ url_for('static', filename='images/video.svg') }}" alt="video" style="height: 20px;">
+            go to video
+        </a>
+        <div class="controls-timeline" style="opacity: 1; bottom: 0.5rem;">
+            <div id="range+timestamps" style="position: relative; margin: 0 0.5rem;">
+                <input type="range" id="seek-bar-shorts" value="0">
+            </div>
+        </div>
+    </div>
+    <div class="sideboard" id="sideee">
+    </div>
+    <div class="mobileHint">Swipe nach links oder rechts, um mehr Shorts zu entdecken!</div>
+</div>
+<script>
+    sessionStorage.setItem("json", JSON.stringify({{ video_results | tojson | safe }}));
+    function getResultsJS()
+    {
+        const resultString = JSON.stringify({{ video_results | tojson | safe }});
+        return JSON.parse(resultString);
+    }
+
+    function getVideoUrl() {
+        return "{{ url_for('video') }}";
+    }
+</script>
+<script src="{{ url_for('static', filename='shorts2.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,20 @@
+<div class="container mt-4">
+    <div class="row">
+        {% for i in range(10) %}
+        <div class="col mb-4">
+            <div class="card">
+                <a href="{{ url_for('video') }}">
+                    <!-- <img src="https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Rick Astley - Never Gonna Give You Up" class="card-img-top"> -->
+                    <!-- 'https://lecture2go.uni-hamburg.de/images/64.070_heitmann_2016-01-27_09-15.jpg?lastmodified=1663761314805' -->
+                    <img src="https://lecture2go.uni-hamburg.de/images/64.070_heitmann_2016-01-27_09-15.jpg" alt="Rick Astley - Never Gonna Give You Up" class="card-img-top">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">AD-Vorlesung1!1!!</h5>
+                    <p class="card-text">...blabla Lagrange blabla...</p>
+                    <p class="card-text"><small class="text-muted">13.06.2021</small></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

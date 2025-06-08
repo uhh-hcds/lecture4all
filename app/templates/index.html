@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Lecture4All{% endblock %}
+
+{% block content %}
+    <div class="d-flex flex-column align-items-center margin-top mb-1">
+        <h2 class="mb-4">Was möchtest du erklärt haben?</h2>
+        <div id="speech-recognition-warning" class="alert alert-warning" style="display: none;">
+            Hinweis: die Spracherkennung wird von Ihrem Browser leider nicht unterstützt.
+        </div>
+        {% include "searchbar.html" %}
+        <p id="shortsViewInfo" class="hint-text">
+            Shorts View ist aktiviert. 
+            <img id="questionmark" src="{{ url_for('static', filename='images/questionmark.svg') }}" alt="Search" style="height: 20px;">
+            <span id="shorts-explanation" class="hint-text">Shorts View ist eine experimentelle Ansicht, die dir dabei helfen soll, schneller deine Frage zu beantworten. Probier's mal aus!</span>
+        </p>
+    </div> 
+{% endblock %}

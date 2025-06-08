@@ -1,0 +1,10 @@
+<div class="mx-auto" id="search-bar">
+    <form id="searchForm" class="searchgroup" action="{{ url_for('searchresults') }}" method="get"
+          data-shorts-url="{{ url_for('shorts') }}" data-searchresults-url="{{ url_for('searchresults') }}">
+        <button class="btn btn-white searchLupe" type="submit"><img src="{{ url_for('static', filename='images/search.svg') }}" alt="Search" style="height: 20px;"></button>
+        <button class="btn btn-white searchMic" id="micro-btn" type="button"><img src="{{ url_for('static', filename='images/microphone.svg') }}" alt="Microphone" style="height: 20px;"></button>
+        <input class="primary-border form-control p-2 pe-5 ps-5" id="query" type="search" name="query" placeholder="Was sind Rot-Schwarz-Bäume?" aria-label="Search">
+    </form>
+</div>
+
+{% include "popups.html" %}

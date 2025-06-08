@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand navbar-light fixed-top">
+    <a class="navbar-brand" href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/whisper_icon.png') }}" alt="Logo" style="height: 40px;"></a>
+    <a class ="whisper" href="{{ url_for('index') }}">Lecture4All</a>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% if request.path != '/' and request.path != '/index' %}
+            {% include "searchbar.html" %}
+        {% endif %}
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('help') }}">Help</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">About</a>
+            </li>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="shorts"> <!-- maybe wieder hidden? -->
+                <label class="form-check-label" for="shorts">Shorts</label>
+            </div>
+        </ul>
+    </div>
+  </nav>

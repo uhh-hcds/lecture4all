@@ -1,0 +1,10 @@
+**/*.pyc
+/app/docker-compose-develop.yml
+db/src/test_src/chroma-env/
+transcription/subtitles/
+transcription/videos
+transcription/transcriptions/
+transcription/venv/
+transcription/processed_transcripts/
+transcription/translated_transcriptions/
+transcription/metadata/

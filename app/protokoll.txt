@@ -1,0 +1,52 @@
+Zuständigkeiten klären
+Git aufsetzen
+Robert kontaktieren -> Frank
+grobe Architektur
+
+Transcription Layer: Audio Processing: Torben
+Voice Recognition: Interface capture user input
+Search and Navigate: Match transcriptions with input: Torben
+UI design: Frank & Vic
+
+Fragen
+Soll UI an Lecture2Go angelehnt sein? Integriert?
+Welche Datenbank verwenden? Eigene aufsetzen? Umgang mit zukünftigen Videouploads?
+Anforderungsliste: Suchengine, wie viel Spielraum?
+Deutsche und englische Anfragen?
+
+Zoom Meeting
+Plan: wo liegt backend? wo werden videos verarbeitet?
+Frontend-Team/Backend
+gibt videos oder stellen zurück, wie wir wollen
+50 bis 100 videos sind basis
+vektordatenbank: zugang von Robert
+vektorisierung übernimmt datenbank :) rein und raus sind reiner text
+weiterführung nicht unbedingt mit rein nehmen
+UI: sprachssteuerung, video anklicken, player springt zu richiger zeitmarke
+UI einsprachig, spracheingabe deutsch, später englisch 
+whisper läuft lokal beim user selber
+Robert braucht unsere inf-kennungen für server
+whisper timestamped für backend!
+lokales kleines whisper für frontend
+morgen meeting: 11Uhr
+
+TODO: 
+- better button on shorts
+- fix logo
+- ENG/GER
+- mobile view
+- nur ergebnisse über 90% accuracy? anzeigen lassen
+- zwei calls, einmal timestamps?
+- fix franks sidebar
+- fix shorts
+- fix javascript
+- timestamps
+- bernd lucke banner
+- präsi
+- refactoring
+- README
+- mini-documentation?
+- video erstellen
+
+- daten befüllen
+- immer 10 videos

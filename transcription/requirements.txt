@@ -1,0 +1,8 @@
+requests
+torch
+whisper_timestamped
+bs4
+yt_dlp
+SentencePiece
+transformers
+sacremoses
