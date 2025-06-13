@@ -4,7 +4,7 @@
 @app.py
 """
 
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, Response
 import requests
 import os
 import json
@@ -92,5 +92,25 @@ def help():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/api/convert_srt_to_vtt')
+def convert_srt_to_vtt():
+    srt_path = request.args.get('srt_path')  # z. B. '/transcription/subtitles/19550_subtitles.srt'
+    
+    try:
+        with open(srt_path, 'r', encoding='utf-8') as f:
+            srt_content = f.read()
+        
+        # Konvertiere SRT zu VTT
+        vtt_content = "WEBVTT\n\n" + srt_content.replace(',', '.')
+        
+        # Sende als VTT-Datei zurück
+        return Response(
+            vtt_content,
+            mimetype='text/vtt',
+            headers={'Content-Disposition': 'inline'}
+        )
+    except Exception as e:
+        return str(e), 404
 
 print('starting...')

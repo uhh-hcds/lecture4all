@@ -32,20 +32,9 @@ function changeSrc(videoUrl)
 const chunks = thisVideo.chunks;
 changeSrc(thisVideo.m3u8_url);
 customVideo.poster = thisVideo.thumbnail_url;
+loadSubtitles();
 document.getElementById('title').innerHTML = thisVideo.title;
 document.getElementById('speaker+date').innerHTML = thisVideo.speaker + "<br>" + thisVideo.date;
-
-// video2 = document.getElementById('video2');
-// const track = video2.querySelector('track');
-
-// track.addEventListener('load', () => {
-//     console.log('Untertitel wurden geladen.');
-//     console.log('Untertitel-Spuren:', video2.textTracks);
-// });
-
-// track.addEventListener('error', () => {
-//     console.error('Fehler beim Laden der Untertitel.');
-// });
 
 // Create lists for texts times and ends of chunks
 const texts = chunks.map(chunk => chunk.text);
@@ -214,3 +203,96 @@ function addListTimestamp(time, text) {
     });
     document.querySelector('.timestamps-container').appendChild(listTimestamp);
 }
+
+const subtitleBtn = document.querySelector('.subtitle-btn');
+let subtitleTrack = customVideo.textTracks[0];
+
+const settingsMenu = document.getElementById('settings-menu');
+const subtitleLanguage = document.getElementById('subtitle-language');
+let menuTimeout;
+
+subtitleBtn.addEventListener('click', function(e) {
+    this.classList.toggle('active');
+    if (subtitleTrack.mode === 'showing') {
+        subtitleTrack.mode = 'hidden';
+        this.classList.remove('active');
+    } else {
+        subtitleTrack.mode = 'showing';
+        this.classList.add('active');
+        settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
+        resetMenuTimeout();
+    }
+});
+settingsMenu.addEventListener('mouseover', function(e) {
+    e.stopPropagation();
+    resetMenuTimeout();
+});
+settingsMenu.addEventListener('click', function(e) {
+    e.stopPropagation();
+    resetMenuTimeout();
+});
+
+subtitleLanguage.addEventListener('click', function(e) {
+    e.stopPropagation();
+    resetMenuTimeout();
+});
+subtitleLanguage.addEventListener('change', function(e) {
+    switch (this.value) {
+        case 'de':
+            subtitleTrack.mode = 'hidden';
+            customVideo.innerHTML = `<track id="subtitleTrack" kind="subtitles" src="/api/convert_srt_to_vtt?srt_path=${thisVideo.ger_sub}" srclang="de" label="Deutsch">`
+            subtitleTrack = customVideo.textTracks[0];
+            subtitleBtn.click();
+            break;
+
+        case 'en':
+            subtitleTrack.mode = 'hidden';
+            customVideo.innerHTML = `<track id="subtitleTrack" kind="subtitles" src="/api/convert_srt_to_vtt?srt_path=${thisVideo.eng_sub}" srclang="en" label="English">`
+            subtitleTrack = customVideo.textTracks[0];
+            subtitleBtn.click();
+            break;
+    }
+});
+    
+function resetMenuTimeout() {
+    clearTimeout(menuTimeout);
+    menuTimeout = setTimeout(hideMenu, 4000); // 4000ms = nach 4 Sekunden schließen
+}
+function hideMenu() {
+    settingsMenu.style.display = 'none';
+}
+
+// Deutsch ausgrauen falls untertitel nicht verfügbar
+async function checkSubsAvailable() {
+    try {
+        const response = await fetch(`/api/convert_srt_to_vtt?srt_path=${thisVideo.ger_sub}`, {
+            method: 'HEAD'
+        });
+        if(!response.ok)
+        {
+            const germanOption = subtitleLanguage.querySelector('option[value="de"]');
+            germanOption.disabled = true;
+        }
+    }
+    catch(e){
+        //...
+    }
+    try {
+        const response = await fetch(`/api/convert_srt_to_vtt?srt_path=${thisVideo.eng_sub}`, {
+            method: 'HEAD'
+        });
+        if(!response.ok)
+        {
+            const englishOption = subtitleLanguage.querySelector('option[value="en"]');
+            englishOption.disabled = true;
+        }
+    }
+    catch(e){
+        //...
+    }
+}
+checkSubsAvailable();
+function loadSubtitles() {
+    customVideo.innerHTML = `<track id="subtitleTrack" kind="subtitles" src="/api/convert_srt_to_vtt?srt_path=${thisVideo.eng_sub}" srclang="en" label="English">`
+}
+// pausePlay(); // Autostart

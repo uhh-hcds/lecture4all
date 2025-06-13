@@ -460,8 +460,6 @@ body, html {
         margin: 0;
         width: 100%;
     }
-    .short-wrapper {
-    }
     
     .short {
         flex-grow: 0;
@@ -471,6 +469,9 @@ body, html {
     }
     .mobileHint {
         display: block;
+    }
+    #controlIcons {
+        min-width: 100px !important;
     }
   }
 /* Video view: */
@@ -598,6 +599,9 @@ background-color: var(--secondary);
 #volume-bar::-moz-range-thumb {
     background: var(--white);
 }
+#controlIcons {
+    min-width: 180px;
+}
 
 .videobutton {
     position: absolute;
@@ -651,5 +655,52 @@ color: #666;
     transition: right 0.4s ease-in-out, opacity 0.4s ease-in;
     padding: 1.5rem;
 }
-#timestampPlaylist {
+.subtitle-btn {
+    position: relative;
+    padding: 2px 0px !important;
+}
+
+.subtitle-btn .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0px;
+    height: 2px;
+    background-color: #ffffff;
+    transition: width 0.1s ease-in-out;
+}
+
+.subtitle-btn.active .underline {
+    width: 100%;
+}
+.settings-menu {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    background-color: #2a2a2a;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    width: 180px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.settings-menu-item {
+    margin-bottom: 8px;
+}
+
+.settings-menu-item label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.8rem;
+}
+
+.settings-menu-item select {
+    width: 100%;
+    padding: 4px;
+    background-color: #4a4a4a;
+    color: white;
+    border: none;
+    border-radius: 2px;
 }
