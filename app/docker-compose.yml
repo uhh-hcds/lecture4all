@@ -48,7 +48,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     ports:
-      - "5001:5000"
+      - "6000:5000"
     volumes:
       - ./:/app
       - /srv/docker/geislinger-lecture4all/lecture4all/transcription:/transcription

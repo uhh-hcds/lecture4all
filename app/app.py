@@ -69,7 +69,7 @@ def shorts():
     query = request.args.get('query')
     json_data, status_code = handle_query(query)
     if status_code != 200:
-        return render_template('error.html', error_info=json_data), status_cod
+        return render_template('error.html', error_info=json_data), status_code
     return render_template('shorts.html', query=query, video_results=json_data['videos'], result_count=len(json_data['videos']))
 
 @app.route('/searchresults', methods=['GET'])
